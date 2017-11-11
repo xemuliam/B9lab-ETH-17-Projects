@@ -2,7 +2,7 @@ var Splitter = artifacts.require("./Splitter.sol");
 
 contract('Contract', function(accounts) {
   
-  var contactInstance;
+  var contractInstance
   var ownerAlice = accounts[0]; 
   var personBob = accounts[1]; 
   var personCarol = accounts[2];
@@ -13,12 +13,12 @@ contract('Contract', function(accounts) {
   beforeEach( function() {
     return Splitter.new( { from : ownerAlice } )
       .then( function( instance ) {
-        contactInstance = instance;
+        contractInstance = instance;
       });
   });
 
   it("should be owned by ownerAlice", function() {
-    return contactInstance.ownerAlice( { from:ownerAlice } )
+    return contractInstance.ownerAlice( { from:ownerAlice } )
     .then( _ownerAlice => {
       console.log(accounts[0]);
         assert.strictEqual( _ownerAlice, ownerAlice, "Contract is not owned by ownerAlice");
@@ -26,14 +26,14 @@ contract('Contract', function(accounts) {
   });
 
   it("should successfully register Bob and Carol", function() {
-    return contactInstance.registerBobAndCarol( personBob, personCarol, { from:ownerAlice } )
+    return contractInstance.registerBobAndCarol( personBob, personCarol, { from:ownerAlice } )
       .then( _result => {
         assert.isOk( _result , "Registration of Bob and Carol was not successful" );
     });
   });
 
   it("should have the correct addresses", function() {
-    return contactInstance.personBob();
+    return contractInstance.personBob();
   });
   
 });
