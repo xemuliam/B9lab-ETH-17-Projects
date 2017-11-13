@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity 0.4.18;
 
 contract Splitter {
     
@@ -8,7 +8,7 @@ contract Splitter {
     address public personCarol;
     
     event LogRegistration(address Alice, address Bob, address Carol);
-    event LogDeposit(uint depositFromAlice, uint shareToBob, uint shareToCarol);
+    event LogDeposit(uint depositFromAlice, address addressBob, uint shareToBob, address addressCarol, uint shareToCarol);
     event LogKillSwitch(address ownerAlice);
     
     function Splitter() 
@@ -47,7 +47,7 @@ contract Splitter {
         require(msg.value % 2 == 0);
         
         uint halfDeposit = msg.value / 2;
-        LogDeposit(msg.value, halfDeposit, halfDeposit);
+        LogDeposit(msg.value, personBob, halfDeposit, personCarol, halfDeposit);
         personBob.transfer(halfDeposit);
         personCarol.transfer(halfDeposit);
 
@@ -60,7 +60,6 @@ contract Splitter {
         returns(uint balance)
     {
         require(contractActive);
-        require(msg.sender == ownerAlice);
         return ownerAlice.balance;
     }
 
@@ -70,8 +69,6 @@ contract Splitter {
         returns(uint balance)
     {
         require(contractActive);
-        require(personBob == msg.sender
-            || ownerAlice == msg.sender);
         return personBob.balance;
     }
     
@@ -81,8 +78,6 @@ contract Splitter {
         returns(uint balance)
     {
         require(contractActive);
-        require(personCarol == msg.sender
-            || ownerAlice == msg.sender);
         return personCarol.balance;
     }
     
