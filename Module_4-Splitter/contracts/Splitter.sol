@@ -1,98 +1,78 @@
-pragma solidity 0.4.18;
+pragma solidity ^0.4.18;
 
-contract Splitter {
-    
-    bool    public contractActive;
-    address public ownerAlice;
-    address public personBob;
-    address public personCarol;
-    
-    event LogRegistration(address Alice, address Bob, address Carol);
-    event LogDeposit(uint depositFromAlice, address addressBob, uint shareToBob, address addressCarol, uint shareToCarol);
-    event LogKillSwitch(address ownerAlice);
-    
-    function Splitter() 
-        public
-    {
-        ownerAlice = msg.sender;
-        contractActive = true;
-    }
+import '../contractLibrary/contractModifiers/Ownable.sol';
+import '../contractLibrary/contractModifiers/Pausable.sol';
 
-    function registerBobAndCarol(address addressBob, address addressCarol) 
-        public
-        returns(bool success)
-    {
-        LogRegistration(msg.sender, addressBob, addressCarol);
-        
-        // should be three separate users
-        require(msg.sender != addressBob);
-        require(msg.sender != addressCarol);
-        require(addressBob != addressCarol);
-        
-        ownerAlice = msg.sender;
-        personBob = addressBob;
-        personCarol = addressCarol;
-        
-        return true;       
-    }
-    
-    function deposit()
-        public
-        payable
-        returns(bool success)
-    {
-        require(contractActive);
-        require(msg.sender == ownerAlice);
-        require(msg.value != 0);
-        require(msg.value % 2 == 0);
-        
-        uint halfDeposit = msg.value / 2;
-        LogDeposit(msg.value, personBob, halfDeposit, personCarol, halfDeposit);
-        personBob.transfer(halfDeposit);
-        personCarol.transfer(halfDeposit);
+contract Splitter is Ownable, Pausable {
 
-        return true;
+  address[] public recipients;
+  mapping(address => uint) public balances;
+
+  event LogRecipientExists(address recipient);
+  event LogRegistration(address owner, address recipient, uint balance);
+  event LogDeposit(address owner, uint deposit, address recipient, uint share);
+
+  function registerRecipient(address recipient)
+    public
+    onlyOwner
+    isActive
+    returns(bool success)
+  {
+    bool exists;
+    for(uint i=0; i<recipients.length; i++) {
+      if(recipients[i] == recipient) {
+        LogRecipientExists(recipient);
+        exists = true;
+      }
     }
-    
-    function getBalanceAlice()
-        public
-        view
-        returns(uint balance)
-    {
-        require(contractActive);
-        return ownerAlice.balance;
+    require(!exists);
+
+    recipients.push(recipient);
+    balances[recipient] = 0;
+    LogRegistration(msg.sender, recipient, balances[recipient]);
+
+    return true;
+  }
+
+  function deposit()
+    public
+    payable
+    onlyOwner
+    isActive
+    returns(bool success)
+  {
+    require(msg.value != 0);
+    require(recipients.length > 0);
+
+    uint recipientCount = recipients.length;
+    require(msg.value % recipientCount == 0);
+    uint depositShare = msg.value / recipientCount;
+
+    for(uint i=0; i<recipients.length; i++) {
+      balances[recipients[i]] += depositShare;
+      LogDeposit(msg.sender, msg.value, recipients[i], depositShare);
     }
 
-    function getBalanceBob()
-        public
-        view
-        returns(uint balance)
-    {
-        require(contractActive);
-        return personBob.balance;
+    return true;
+  }
+
+  function withdraw() 
+    public
+    isActive
+    returns(bool success)
+  {
+    uint payment = balances[msg.sender];
+
+    require(payment > 0);
+    require(this.balance >= payment);
+
+    balances[msg.sender] = 0;
+
+    if(!msg.sender.send(payment)) {
+      revert();
     }
-    
-    function getBalanceCarol()
-        public
-        view
-        returns(uint balance)
-    {
-        require(contractActive);
-        return personCarol.balance;
-    }
-    
-    function killContract()
-        public
-        returns(bool success)
-    {
-        require(ownerAlice == msg.sender);
-        require(contractActive);
-        contractActive = false;
-        LogKillSwitch(msg.sender);
-        ownerAlice.transfer(ownerAlice.balance);
-        personBob.transfer(personBob.balance);
-        personCarol.transfer(personCarol.balance);
-        return true;
-    }
-    
+
+    return true;
+  }
+
 }
