@@ -1,16 +1,20 @@
 pragma solidity ^0.4.18;
 
-import '../contractLibrary/contractModifiers/Ownable.sol';
 import '../contractLibrary/contractModifiers/Pausable.sol';
 
-contract Splitter is Ownable, Pausable {
+contract Splitter is Pausable {
 
-  address[] public recipients;
-  mapping(address => uint) public balances;
+  struct RecipientStruct {
+    uint balance;
+    bool exists;
+  }  
 
-  event LogRecipientExists(address recipient);
-  event LogRegistration(address owner, address recipient, uint balance);
-  event LogDeposit(address owner, uint deposit, address recipient, uint share);
+  address[] private recipients;
+  mapping(address => RecipientStruct) public recipientStructs;
+
+  event LogRegistration(address sender, address owner, address recipient, uint balance);
+  event LogDeposit(address sender, address owner, uint deposit, address recipient, uint share);
+  event LogWithdraw(address sender, uint amount);
 
   function registerRecipient(address recipient)
     public
@@ -18,18 +22,11 @@ contract Splitter is Ownable, Pausable {
     isActive
     returns(bool success)
   {
-    bool exists;
-    for(uint i=0; i<recipients.length; i++) {
-      if(recipients[i] == recipient) {
-        LogRecipientExists(recipient);
-        exists = true;
-      }
-    }
-    require(!exists);
+    require(!isRecipient(recipient));
 
     recipients.push(recipient);
-    balances[recipient] = 0;
-    LogRegistration(msg.sender, recipient, balances[recipient]);
+    recipientStructs[recipient].exists = true;
+    LogRegistration(msg.sender, owner, recipient, recipientStructs[recipient].balance);
 
     return true;
   }
@@ -48,9 +45,10 @@ contract Splitter is Ownable, Pausable {
     require(msg.value % recipientCount == 0);
     uint depositShare = msg.value / recipientCount;
 
+    /** unavoidable unbounded loop */
     for(uint i=0; i<recipients.length; i++) {
-      balances[recipients[i]] += depositShare;
-      LogDeposit(msg.sender, msg.value, recipients[i], depositShare);
+      recipientStructs[recipients[i]].balance += depositShare;
+      LogDeposit(msg.sender, owner, msg.value, recipients[i], depositShare);
     }
 
     return true;
@@ -61,18 +59,35 @@ contract Splitter is Ownable, Pausable {
     isActive
     returns(bool success)
   {
-    uint payment = balances[msg.sender];
-
+    uint payment = recipientStructs[msg.sender].balance;
     require(payment > 0);
-    require(this.balance >= payment);
 
-    balances[msg.sender] = 0;
+    recipientStructs[msg.sender].balance = 0;
+    LogWithdraw(msg.sender, payment);
+
+    msg.sender.transfer(payment);
 
     if(!msg.sender.send(payment)) {
       revert();
     }
 
     return true;
+  }
+
+  function isRecipient(address recipient) 
+    public 
+    constant 
+    returns(bool isIndeed)
+  {
+    return recipientStructs[recipient].exists;
+  }
+
+  function getAddressCount() 
+    public
+    constant 
+    returns(uint count) 
+  { 
+    return recipients.length; 
   }
 
 }

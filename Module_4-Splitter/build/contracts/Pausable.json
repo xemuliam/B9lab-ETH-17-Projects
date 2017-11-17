@@ -218,7 +218,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 388,
+                              "referencedDeclaration": 403,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -552,5 +552,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-16T13:44:03.697Z"
+  "updatedAt": "2017-11-17T12:26:48.246Z"
 }

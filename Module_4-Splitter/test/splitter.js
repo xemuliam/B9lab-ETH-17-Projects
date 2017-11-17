@@ -43,9 +43,9 @@ contract('Contract', function(accounts) {
   it("should have a nil balance for the first recipient after registration", function() {
     return myContract.registerRecipient( recipientOne, { from:owner } )
     .then( txObj => {
-      return myContract.balances( recipientOne, { from:owner } )
+      return myContract.recipientStructs( recipientOne, { from:owner } )
       .then ( txObj => {
-        assert.equal( txObj.toString(10), 0, "The first recipient does not have a nil balance on registration" );
+        assert.equal( txObj[0].toString(10), 0, "The first recipient does not have a nil balance on registration" );
       });
     });
   });
@@ -53,9 +53,9 @@ contract('Contract', function(accounts) {
   it("should have a nil balance for the second recipient after registration", function() {
     return myContract.registerRecipient( recipientTwo, { from:owner } )
     .then( txObj => {
-      return myContract.balances( recipientTwo, { from:owner } )
+      return myContract.recipientStructs( recipientTwo, { from:owner } )
       .then ( txObj => {
-        assert.equal( txObj.toString(10), 0, "The second recipient does not have a nil balance on registration" );
+        assert.equal( txObj[0].toString(10), 0, "The second recipient does not have a nil balance on registration" );
       });
     });
   });
@@ -67,12 +67,12 @@ contract('Contract', function(accounts) {
       .then( txObj => {
         return myContract.deposit( { from:owner, value: amountToSplit } )
         .then( function(txSplit) {
-          return myContract.balances( recipientOne, { from:owner } )
+          return myContract.recipientStructs( recipientOne, { from:owner } )
           .then ( txObj => {
-            assert.equal( txObj.toString(10), expectedShare, "The first recipient has the incorrect share" );
-            return myContract.balances( recipientTwo, { from:owner } )
+            assert.equal( txObj[0].toString(10), expectedShare, "The first recipient has the incorrect share" );
+            return myContract.recipientStructs( recipientTwo, { from:owner } )
             .then ( txObj => {
-              assert.equal( txObj.toString(10), expectedShare, "The second recipient has the incorrect share" );
+              assert.equal( txObj[0].toString(10), expectedShare, "The second recipient has the incorrect share" );
             });
           });
         });
@@ -117,14 +117,14 @@ contract('Contract', function(accounts) {
       .then( txObj => {
         return myContract.deposit( { from:owner, value: amountToSplit } )
         .then( function(txSplit) {
-          return myContract.balances( recipientOne, { from:owner } )
+          return myContract.recipientStructs( recipientOne, { from:owner } )
           .then ( txObj => {
-            assert.equal( txObj.toString(10), expectedShare, "The first recipient has the incorrect share" );
+            assert.equal( txObj[0].toString(10), expectedShare, "The first recipient has the incorrect share" );
             return myContract.withdraw( { from:recipientOne } )
             .then( txObj => {
-              return myContract.balances( recipientOne, { from:owner } )
+              return myContract.recipientStructs( recipientOne, { from:owner } )
               .then ( txObj => {
-                assert.equal( txObj.toString(10), 0, "The first recipient should have a nil balance after withdrawl" );
+                assert.equal( txObj[0].toString(10), 0, "The first recipient should have a nil balance after withdrawl" );
               });
             });
           });
