@@ -1,0 +1,208 @@
+{
+  "contractName": "Remittance",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "pauseContract",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "startContract",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getOwner",
+      "outputs": [
+        {
+          "name": "theOwner",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isPaused",
+      "outputs": [
+        {
+          "name": "isIndeed",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "LogContractPause",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "LogContractResume",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6060604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506104fb806100536000396000f300606060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063439766ce1461007d5780635fb02f4d14610092578063893d20e8146100a75780638da5cb5b146100fc578063b187bd2614610151578063f2fde38b1461017e575b600080fd5b341561008857600080fd5b6100906101b7565b005b341561009d57600080fd5b6100a5610292565b005b34156100b257600080fd5b6100ba61036c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561010757600080fd5b61010f610395565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561015c57600080fd5b6101646103ba565b604051808215151515815260200191505060405180910390f35b341561018957600080fd5b6101b5600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506103d0565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561021257600080fd5b6001600060146101000a81548160ff0219169083151502179055507f9022f48034574f88d5dde439a5da7ebc25082f77761e9d1db4915cea52ade9dc33604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a1565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102ed57600080fd5b60008060146101000a81548160ff0219169083151502179055507fa8ddc33bcc81d4475dfdcb2c883e97be008d608cc0c8a48aa5a8d1076b99654433604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a1565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60008060149054906101000a900460ff16905090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561042b57600080fd5b60008173ffffffffffffffffffffffffffffffffffffffff161415151561045157600080fd5b3373ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561048c57600080fd5b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a723058202fb69ba67a1fb20e053866378a0885662b577c7e5bbed6ad21793578ed6e00a40029",
+  "deployedBytecode": "0x606060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063439766ce1461007d5780635fb02f4d14610092578063893d20e8146100a75780638da5cb5b146100fc578063b187bd2614610151578063f2fde38b1461017e575b600080fd5b341561008857600080fd5b6100906101b7565b005b341561009d57600080fd5b6100a5610292565b005b34156100b257600080fd5b6100ba61036c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561010757600080fd5b61010f610395565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561015c57600080fd5b6101646103ba565b604051808215151515815260200191505060405180910390f35b341561018957600080fd5b6101b5600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506103d0565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561021257600080fd5b6001600060146101000a81548160ff0219169083151502179055507f9022f48034574f88d5dde439a5da7ebc25082f77761e9d1db4915cea52ade9dc33604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a1565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102ed57600080fd5b60008060146101000a81548160ff0219169083151502179055507fa8ddc33bcc81d4475dfdcb2c883e97be008d608cc0c8a48aa5a8d1076b99654433604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a1565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60008060149054906101000a900460ff16905090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561042b57600080fd5b60008173ffffffffffffffffffffffffffffffffffffffff161415151561045157600080fd5b3373ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561048c57600080fd5b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a723058202fb69ba67a1fb20e053866378a0885662b577c7e5bbed6ad21793578ed6e00a40029",
+  "sourceMap": "87:36:3:-;;;200:10:0;192:5;;:18;;;;;;;;;;;;;;;;;;87:36:3;;;;;;",
+  "deployedSourceMap": "87:36:3:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;336:119:1;;;;;;;;;;;;;;459:121;;;;;;;;;;;;;;458:96:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;129:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;584:105:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;290:164:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;336:119:1;268:5:0;;;;;;;;;;;254:19;;:10;:19;;;246:28;;;;;;;;412:4:1;395:14;;:21;;;;;;;;;;;;;;;;;;422:28;439:10;422:28;;;;;;;;;;;;;;;;;;;;;;336:119::o;459:121::-;268:5:0;;;;;;;;;;;254:19;;:10;:19;;;246:28;;;;;;;;535:5:1;518:14;;:22;;;;;;;;;;;;;;;;;;546:29;564:10;546:29;;;;;;;;;;;;;;;;;;;;;;459:121::o;458:96:0:-;511:16;544:5;;;;;;;;;;;537:12;;458:96;:::o;129:20::-;;;;;;;;;;;;;:::o;584:105:1:-;640:13;670:14;;;;;;;;;;;663:21;;584:105;:::o;290:164:0:-;268:5;;;;;;;;;;;254:19;;:10;:19;;;246:28;;;;;;;;388:1;376:8;:13;;;;368:22;;;;;;;;416:10;404:22;;:8;:22;;;;396:31;;;;;;;;441:8;433:5;;:16;;;;;;;;;;;;;;;;;;290:164;:::o",
+  "source": "pragma solidity ^0.4.18;\n\nimport '../contractLibrary/contractModifiers/Pausable.sol';\n\ncontract Remittance is Pausable {\n\n}\n",
+  "sourcePath": "/home/mwhittl1/B9lab-ETH-17-Projects/Module_4-Remittance/contracts/Remittance.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/mwhittl1/B9lab-ETH-17-Projects/Module_4-Remittance/contracts/Remittance.sol",
+      "exportedSymbols": {
+        "Remittance": [
+          191
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 187,
+        "name": "PragmaDirective",
+        "src": "0:24:3"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 129,
+          "absolutePath": "/home/mwhittl1/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/contractModifiers/Pausable.sol",
+          "file": "../contractLibrary/contractModifiers/Pausable.sol",
+          "scope": 192,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 188,
+        "name": "ImportDirective",
+        "src": "26:59:3"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            57,
+            128
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            191,
+            128,
+            57
+          ],
+          "name": "Remittance",
+          "nodes": [
+            null
+          ],
+          "scope": 192
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Pausable",
+                  "referencedDeclaration": 128,
+                  "type": "contract Pausable"
+                },
+                "id": 189,
+                "name": "UserDefinedTypeName",
+                "src": "110:8:3"
+              }
+            ],
+            "id": 190,
+            "name": "InheritanceSpecifier",
+            "src": "110:8:3"
+          }
+        ],
+        "id": 191,
+        "name": "ContractDefinition",
+        "src": "87:36:3"
+      }
+    ],
+    "id": 192,
+    "name": "SourceUnit",
+    "src": "0:124:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-18T13:58:54.383Z"
+}
