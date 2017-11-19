@@ -15,8 +15,8 @@ contract('Contract', function(accounts) {
   var playerOne = accounts[1]; 
   var playerTwo = accounts[2]; 
 
-  var correctDepositAmount = 1000000000000000000;
-  var incorrectDepositAmount = 2000000000000000000;
+  var correctDepositAmount = 100000000000000000;
+  var incorrectDepositAmount = 200000000000000000;
 
   beforeEach( function() {
     return RockPaperScissors.new( correctDepositAmount, { from : owner } )
