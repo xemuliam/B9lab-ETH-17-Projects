@@ -9,7 +9,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "bip39": "^2.3.0",
+    "create-html": "^4.1.0",
     "ethereumjs-testrpc": "^6.0.1",
-    "truffle": "^4.0.1"
+    "file-loader": "^1.1.5",
+    "truffle": "^4.0.1",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "jquery": "^3.2.1",
+    "truffle-contract": "^3.0.1",
+    "web3": "^0.20.1"
   }
 }
