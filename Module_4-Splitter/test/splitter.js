@@ -4,9 +4,9 @@ contract('Contract', function(accounts) {
   
   var myContract;
 
-  var owner = accounts[0]; 
-  var recipientOne = accounts[1]; 
-  var recipientTwo = accounts[2];
+  const owner = accounts[0]; 
+  const recipientOne = accounts[1]; 
+  const recipientTwo = accounts[2];
 
   const amountToSplit = web3.toWei(0.2, "ether");
   const expectedShare = web3.toWei(0.1, "ether");

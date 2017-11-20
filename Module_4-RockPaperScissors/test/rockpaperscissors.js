@@ -11,12 +11,12 @@ contract('Contract', function(accounts) {
   
   var myContract;
 
-  var owner = accounts[0]; 
-  var playerOne = accounts[1]; 
-  var playerTwo = accounts[2]; 
+  const owner = accounts[0]; 
+  const playerOne = accounts[1]; 
+  const playerTwo = accounts[2]; 
 
-  var correctDepositAmount = 100000000000000000;
-  var incorrectDepositAmount = 200000000000000000;
+  const correctDepositAmount = 100000000000000000;
+  const incorrectDepositAmount = 200000000000000000;
 
   beforeEach( function() {
     return RockPaperScissors.new( correctDepositAmount, { from : owner } )
