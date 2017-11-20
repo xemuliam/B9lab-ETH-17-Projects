@@ -19,7 +19,7 @@ contract('Contract', function(accounts) {
   });
 
   it("should be owned by the owner", function() {
-    return myContract.owner( { from:owner } )
+    return myContract.getOwner( { from:owner } )
     .then( _owner => {
         assert.strictEqual( _owner, owner, "Contract is not owned by owner");
     });
