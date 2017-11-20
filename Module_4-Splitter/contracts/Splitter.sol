@@ -67,10 +67,6 @@ contract Splitter is Pausable {
 
     msg.sender.transfer(payment);
 
-    if(!msg.sender.send(payment)) {
-      revert();
-    }
-
     return true;
   }
 

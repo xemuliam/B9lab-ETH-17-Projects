@@ -20,29 +20,29 @@ contract('Contract', function(accounts) {
 
   it("should be owned by the owner", function() {
     return myContract.getOwner( { from:owner } )
-    .then( _owner => {
-        assert.strictEqual( _owner, owner, "Contract is not owned by owner");
+    .then( receivedValue => {
+        assert.strictEqual( receivedValue, owner, "Contract is not owned by owner");
     });
   });
 
   it("should successfully register two recipients", function() {
     return myContract.registerRecipient( recipientOne, { from:owner } )
-    .then( receivedValue => {
-      assert.equal( receivedValue.logs.length, 1, "Registration of the first recipient was not successful" );
-      assert.strictEqual( receivedValue.logs[0].args.recipient, recipientOne, "Registration of the first recipient was not successful" );
-      assert.isOk( receivedValue , "Registration of the first recipient was not successful" );
+    .then( txObj => {
+      assert.equal( txObj.logs.length, 1, "Registration of the first recipient was not successful" );
+      assert.strictEqual( txObj.logs[0].args.recipient, recipientOne, "Registration of the first recipient was not successful" );
+      assert.isOk( txObj, "Registration of the first recipient was not successful" );
       return myContract.registerRecipient( recipientTwo, { from:owner } );
       })
-      .then( receivedValue => {
-        assert.equal( receivedValue.logs.length, 1, "Registration of the second recipient was not successful" );
-        assert.strictEqual( receivedValue.logs[0].args.recipient, recipientTwo, "Registration of the second recipient was not successful" );
-        assert.isOk( receivedValue , "Registration of the second recipient was not successful" );
+      .then( txObj => {
+        assert.equal( txObj.logs.length, 1, "Registration of the second recipient was not successful" );
+        assert.strictEqual( txObj.logs[0].args.recipient, recipientTwo, "Registration of the second recipient was not successful" );
+        assert.isOk( txObj , "Registration of the second recipient was not successful" );
       });
   });
 
   it("should have a nil balance for the first recipient after registration", function() {
     return myContract.registerRecipient( recipientOne, { from:owner } )
-    .then( receivedValue => {
+    .then( txObj => {
       return myContract.recipientStructs( recipientOne, { from:owner } )
       .then ( receivedValue => {
         assert.equal( receivedValue[0].toString(10), 0, "The first recipient does not have a nil balance on registration" );
@@ -52,7 +52,7 @@ contract('Contract', function(accounts) {
 
   it("should have a nil balance for the second recipient after registration", function() {
     return myContract.registerRecipient( recipientTwo, { from:owner } )
-    .then( receivedValue => {
+    .then( txObj => {
       return myContract.recipientStructs( recipientTwo, { from:owner } );
       })
       .then ( receivedValue => {
@@ -62,10 +62,10 @@ contract('Contract', function(accounts) {
 
   it("should split the transfer amount from the owner between the two recipients", function() {
     return myContract.registerRecipient( recipientOne, { from:owner } )
-    .then( receivedValue => {
+    .then( txObj => {
       return myContract.registerRecipient( recipientTwo, { from:owner } );
       })
-      .then( receivedValue => {
+      .then( txObj => {
         return myContract.deposit( { from:owner, value: amountToSplit } );
       })
       .then( function(txSplit) {
@@ -112,10 +112,10 @@ contract('Contract', function(accounts) {
 
   it("should allow a recipient to withdraw their funds", function() {
     return myContract.registerRecipient( recipientOne, { from:owner } )
-      .then( receivedValue => {
+      .then( txObj => {
         return myContract.registerRecipient( recipientTwo, { from:owner } );
       })
-      .then( receivedValue => {
+      .then( txObj => {
         return myContract.deposit( { from:owner, value: amountToSplit } );
       })
       .then( function(txSplit) {
@@ -125,7 +125,7 @@ contract('Contract', function(accounts) {
         assert.equal( receivedValue[0].toString(10), expectedShare, "The first recipient has the incorrect share" );
         return myContract.withdraw( { from:recipientOne } );
       })
-      .then( receivedValue => {
+      .then( txObj => {
         return myContract.recipientStructs( recipientOne, { from:owner } );
       })
       .then ( receivedValue => {

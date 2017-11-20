@@ -104,7 +104,7 @@ contract RockPaperScissors is Pausable {
     return result;    
   }
 
-  function withdraw() 
+  function withdraw()
     public
     isActive
     returns(bool success)
@@ -116,10 +116,6 @@ contract RockPaperScissors is Pausable {
     LogWithdraw(msg.sender, payment);
 
     msg.sender.transfer(payment);
-
-    if(!msg.sender.send(payment)) {
-      revert();
-    }
 
     return true;
   }
