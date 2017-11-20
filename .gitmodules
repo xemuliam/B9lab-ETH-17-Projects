@@ -1,0 +1,9 @@
+[submodule "Module_4-Splitter/contractLibrary"]
+	path = Module_4-Splitter/contractLibrary
+	url = https://github.com/whittlem/contractLibrary
+[submodule "Module_4-RockPaperScissors/contractLibrary"]
+	path = Module_4-RockPaperScissors/contractLibrary
+	url = https://github.com/whittlem/contractLibrary
+[submodule "Module_4-Remittance/contractLibrary"]
+	path = Module_4-Remittance/contractLibrary
+	url = https://github.com/whittlem/contractLibrary
