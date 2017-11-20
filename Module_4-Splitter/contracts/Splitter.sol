@@ -26,8 +26,7 @@ contract Splitter is Pausable {
 
     recipients.push(recipient);
     recipientStructs[recipient].exists = true;
-    // TODO: change owner to getOwner() from Ownable.sol when I get it working
-    LogRegistration(msg.sender, owner, recipient, recipientStructs[recipient].balance);
+    LogRegistration(msg.sender, getOwner(), recipient, recipientStructs[recipient].balance);
 
     return true;
   }
@@ -49,8 +48,7 @@ contract Splitter is Pausable {
     /** unavoidable unbounded loop */
     for(uint i=0; i<recipients.length; i++) {
       recipientStructs[recipients[i]].balance += depositShare;
-      // TODO: change owner to getOwner() from Ownable.sol when I get it working
-      LogDeposit(msg.sender, owner, msg.value, recipients[i], depositShare);
+      LogDeposit(msg.sender, getOwner(), msg.value, recipients[i], depositShare);
     }
 
     return true;
