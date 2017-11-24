@@ -1,4 +1,4 @@
-var RockPaperScissors = artifacts.require("./RockPaperScissors.sol");
+var Hub = artifacts.require("./Hub.sol");
 
 contract('Contract', function(accounts) {
 
@@ -9,6 +9,7 @@ contract('Contract', function(accounts) {
     Scissors: 3
   };
   
+  var myHub;
   var myContract;
 
   const owner = accounts[0]; 
@@ -19,8 +20,13 @@ contract('Contract', function(accounts) {
   const incorrectDepositAmount = 200000000000000000;
 
   beforeEach( function() {
-    return RockPaperScissors.new( correctDepositAmount, { from : owner } )
-      .then( function( instance ) {
+    return Hub.new( correctDepositAmount, { from : owner } )
+    .then( function( instance ) {
+      myHub = instance;
+      return myHub.newCampaign( correctDepositAmount, { from : owner } );
+      })
+      .then( function( instance ) { 
+        console.log('DEBUG: ' + instance.contractAddress);
         myContract = instance;
       });
   });

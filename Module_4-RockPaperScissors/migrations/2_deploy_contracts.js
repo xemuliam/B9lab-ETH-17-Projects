@@ -1,5 +1,5 @@
-var RockPaperScissors = artifacts.require("./RockPaperScissors.sol");
+var Hub = artifacts.require("./Hub.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(RockPaperScissors, web3.toWei("0.1", "ether"));
+  deployer.deploy(Hub);
 };
