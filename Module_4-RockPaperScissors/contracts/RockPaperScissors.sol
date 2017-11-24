@@ -13,6 +13,7 @@ contract RockPaperScissors is Pausable {
 
   uint public correctDepositAmount;
 
+  address public sponsor;
   address public playerOne;
   address public playerTwo;
 
@@ -24,14 +25,21 @@ contract RockPaperScissors is Pausable {
 
   mapping (bytes32 => mapping(bytes32 => uint)) playerChoices;
 
+  modifier onlySponsor() {
+    require(msg.sender == sponsor);
+    _;
+  }
+
   event LogRegistration(address sender, uint8 player, uint balance,  uint deposit);
   event LogPlayerChoice(address sender, uint8 player, bytes32 keccakChoice);
   event LogOutcome(address sender, address playerOne, bytes32 playerOneChoice, address playerTwo, bytes32 playerTwoChoice, uint result);
   event LogWithdraw(address sender, uint amount);
 
-  function RockPaperScissors(uint depositAmount) 
+  function RockPaperScissors(address campaignSponsor, uint depositAmount) 
     public 
   {
+    sponsor = campaignSponsor;
+
     correctDepositAmount = depositAmount;
 
     playerChoices[keccak256(Choices.Rock)][keccak256(Choices.Rock)] = 0;

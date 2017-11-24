@@ -26,6 +26,7 @@ contract('Contract', function(accounts) {
       return myHub.newCampaign( correctDepositAmount, { from : owner } );
       })
       .then( function( instance ) { 
+        console.log(instance);
         console.log('DEBUG: ' + instance.contractAddress);
         myContract = instance;
       });

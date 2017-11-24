@@ -7,15 +7,15 @@ contract Hub is Pausable {
   
   address[] public campaigns;
 
-  event LogNewCampaign(address campaign, uint depositAmount);
+  event LogNewCampaign(address campaign, address sponsor, uint depositAmount);
 
   function newCampaign(uint depositAmount)
     public
     returns(address contractAddress)
   {
-    RockPaperScissors trustedCampaign = new RockPaperScissors(depositAmount);
+    RockPaperScissors trustedCampaign = new RockPaperScissors(msg.sender, depositAmount);
     campaigns.push(trustedCampaign);
-    LogNewCampaign(trustedCampaign, depositAmount);
+    LogNewCampaign(trustedCampaign, msg.sender, depositAmount);
     return trustedCampaign;
   }
 
