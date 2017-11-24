@@ -19,6 +19,37 @@ contract Hub is Pausable {
     return trustedCampaign;
   }
 
+  // Pass-through Admin Controls
+
+  function stopCampaign(address campaignAddress) 
+    public
+    onlyOwner
+    returns(bool success)
+  {
+    RockPaperScissors trustedCampaign = RockPaperScissors(campaignAddress);
+    return(trustedCampaign.pauseContract());
+  }
+
+  function startCampaign(address campaignAddress) 
+    public
+    onlyOwner
+    returns(bool success)
+  {
+    RockPaperScissors trustedCampaign = RockPaperScissors(campaignAddress);
+    return(trustedCampaign.startContract());
+  }
+
+  function changeCampaignOwner(address campaignAddress, address newOwner) 
+    public
+    onlyOwner
+    returns(bool success)
+  {
+    RockPaperScissors trustedCampaign = RockPaperScissors(campaignAddress);
+    return(trustedCampaign.changeOwner(newOwner));
+  }
+
+  // Getters
+
   function getCampaignCount()
     public
     constant
