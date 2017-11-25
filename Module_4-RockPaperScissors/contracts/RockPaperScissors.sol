@@ -152,4 +152,12 @@ contract RockPaperScissors is Pausable {
     return recipients.length; 
   }
 
+  function getSponsor() 
+    public
+    view
+    returns(address theSponsor)
+  {
+    return sponsor;
+  }
+
 }
