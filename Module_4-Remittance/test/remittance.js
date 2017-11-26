@@ -3,11 +3,11 @@ var Remittance = artifacts.require("./Remittance.sol");
 contract('Contract', function(accounts) {
   
   var myContract;
-
   var owner = accounts[0]; 
-
+  var numBlocksUntilTimeout = 1;
+  
   beforeEach( function() {
-    return Remittance.new( { from : owner } )
+    return Remittance.new( numBlocksUntilTimeout, { from : owner } )
       .then( function( instance ) {
         myContract = instance;
       });
@@ -19,5 +19,7 @@ contract('Contract', function(accounts) {
         assert.strictEqual( _owner, owner, "Contract is not owned by owner");
     });
   });
+
+  // TODO: tests to follow
 
 });
