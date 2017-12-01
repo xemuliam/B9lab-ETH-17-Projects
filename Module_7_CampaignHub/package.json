@@ -1,0 +1,27 @@
+{
+  "name": "contractfactory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "jquery": "^3.2.1",
+    "serve": "^6.4.1",
+    "truffle": "3.4.6",
+    "truffle-contract": "^3.0.1",
+    "truffle-default-builder": "^2.0.0",
+    "web3": "^0.20.1"
+  },
+  "devDependencies": {
+    "bip39": "^2.4.0",
+    "create-html": "^4.0.0",
+    "ethereumjs-testrpc": "^6.0.1",
+    "file-loader": "^1.1.5",
+    "webpack": "^3.8.1"
+  }
+}
