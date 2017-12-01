@@ -121,14 +121,6 @@ contract RockPaperScissors is Pausable {
     
     /** Getters */
 
-    function getBalance()
-        public
-        view
-        returns(uint balance)
-    {
-        return playerBalances[msg.sender].balance;
-    }
-
     function getGameStruct(uint index) 
         public
         view
@@ -137,20 +129,12 @@ contract RockPaperScissors is Pausable {
         return gameStructs[index];
     }
 
-    function getPlayerBalance(address player)
+    function getPlayerStruct(address player)
         public
         view
-        returns(uint balance)
+        returns(PlayerStruct playerStruct)
     {
-        return playerBalances[player].balance;
+        return playerBalances[player];
     }
-
-    function isPlayerInGame(address player)
-        public
-        view
-        returns(bool isIndeed)
-    {
-        return playerBalances[player].isInGame;
-    }
-    
+   
 }
