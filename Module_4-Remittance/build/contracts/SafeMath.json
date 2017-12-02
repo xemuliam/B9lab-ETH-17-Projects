@@ -1,15 +1,15 @@
 {
   "contractName": "SafeMath",
   "abi": [],
-  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820b00b9c14d4ad9e89e70cc049021cac744699befd52e262dadd7b9501f05803200029",
-  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820b00b9c14d4ad9e89e70cc049021cac744699befd52e262dadd7b9501f05803200029",
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820a0a429567f615db0b392aa6ad66cd93fa44a24a2099d17e6e31d7f873a1c422d0029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820a0a429567f615db0b392aa6ad66cd93fa44a24a2099d17e6e31d7f873a1c422d0029",
   "sourceMap": "26:630:0:-;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "26:630:0:-;;;;;",
-  "source": "pragma solidity ^0.4.18;\n\nlibrary SafeMath {\n\n  function mul(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    if (a == 0) {\n      return 0;\n    }\n    uint256 c = a * b;\n    assert(c / a == b);\n    return c;\n  }\n\n  function div(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    uint256 c = a / b;\n    return c;\n  }\n\n  function sub(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    assert(b <= a);\n    return a - b;\n  }\n\n  function add(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    uint256 c = a + b;\n    assert(c >= a);\n    return c;\n  }\n\n}",
-  "sourcePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/SafeMath.sol",
+  "source": "pragma solidity ^0.4.18;\n\nlibrary SafeMath {\n\n  function mul(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    if (a == 0) {\n      return 0;\n    }\n    uint256 c = a * b;\n    assert(c / a == b);\n    return c;\n  }\n\n  function div(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    uint256 c = a / b;\n    return c;\n  }\n\n  function sub(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    assert(b <= a);\n    return a - b;\n  }\n\n  function add(uint256 a, uint256 b) \n    internal \n    pure \n    returns (uint256) \n  {\n    uint256 c = a + b;\n    assert(c >= a);\n    return c;\n  }\n\n}\n",
+  "sourcePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/contracts/SafeMath.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/SafeMath.sol",
+      "absolutePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/contracts/SafeMath.sol",
       "exportedSymbols": {
         "SafeMath": [
           97
@@ -367,7 +367,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 570,
+                              "referencedDeclaration": 656,
                               "type": "function (bool) pure",
                               "value": "assert"
                             },
@@ -869,7 +869,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 570,
+                              "referencedDeclaration": 656,
                               "type": "function (bool) pure",
                               "value": "assert"
                             },
@@ -1227,7 +1227,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 570,
+                              "referencedDeclaration": 656,
                               "type": "function (bool) pure",
                               "value": "assert"
                             },
@@ -1335,7 +1335,7 @@
     ],
     "id": 98,
     "name": "SourceUnit",
-    "src": "0:656:0"
+    "src": "0:657:0"
   },
   "compiler": {
     "name": "solc",
@@ -1343,5 +1343,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-26T11:34:31.059Z"
+  "updatedAt": "2017-12-02T21:30:23.560Z"
 }

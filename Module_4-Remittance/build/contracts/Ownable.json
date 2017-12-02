@@ -58,15 +58,15 @@
       "type": "event"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555061030b8061005e6000396000f30060606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063893d20e814610051578063a6f9dae1146100a6575b600080fd5b341561005c57600080fd5b6100646100f7565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610120565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561017d57600080fd5b60008273ffffffffffffffffffffffffffffffffffffffff16141515156101a357600080fd5b3373ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156101de57600080fd5b7f1f8d7d25344642d919d55999e4664aa452a5f424bc0936ceb9c2b300db7dcbd96000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1683604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a1816000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600190509190505600a165627a7a72305820965d69866952ea74fa269143c263f0537b250841deb588b994dfabedb2318e760029",
-  "deployedBytecode": "0x60606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063893d20e814610051578063a6f9dae1146100a6575b600080fd5b341561005c57600080fd5b6100646100f7565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610120565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561017d57600080fd5b60008273ffffffffffffffffffffffffffffffffffffffff16141515156101a357600080fd5b3373ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156101de57600080fd5b7f1f8d7d25344642d919d55999e4664aa452a5f424bc0936ceb9c2b300db7dcbd96000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1683604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a1816000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600190509190505600a165627a7a72305820965d69866952ea74fa269143c263f0537b250841deb588b994dfabedb2318e760029",
+  "bytecode": "0x6060604052341561000f57600080fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555061030b8061005e6000396000f30060606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063893d20e814610051578063a6f9dae1146100a6575b600080fd5b341561005c57600080fd5b6100646100f7565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610120565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561017d57600080fd5b60008273ffffffffffffffffffffffffffffffffffffffff16141515156101a357600080fd5b3373ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156101de57600080fd5b7f1f8d7d25344642d919d55999e4664aa452a5f424bc0936ceb9c2b300db7dcbd96000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1683604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a1816000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600190509190505600a165627a7a72305820fb265b5b6710d6ca66263b1813338e86f30ee96de02505bacfab1c9c93769df80029",
+  "deployedBytecode": "0x60606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063893d20e814610051578063a6f9dae1146100a6575b600080fd5b341561005c57600080fd5b6100646100f7565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610120565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561017d57600080fd5b60008273ffffffffffffffffffffffffffffffffffffffff16141515156101a357600080fd5b3373ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156101de57600080fd5b7f1f8d7d25344642d919d55999e4664aa452a5f424bc0936ceb9c2b300db7dcbd96000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1683604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a1816000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600190509190505600a165627a7a72305820fb265b5b6710d6ca66263b1813338e86f30ee96de02505bacfab1c9c93769df80029",
   "sourceMap": "26:588:2:-;;;132:61;;;;;;;;178:10;170:5;;:18;;;;;;;;;;;;;;;;;;26:588;;;;;;",
   "deployedSourceMap": "26:588:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;515:96;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;268:243;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;515:96;568:16;601:5;;;;;;;;;;;594:12;;515:96;:::o;268:243::-;344:20;246:5;;;;;;;;;;;232:19;;:10;:19;;;224:28;;;;;;;;394:1;382:8;:13;;;;374:22;;;;;;;;422:10;410:22;;:8;:22;;;;402:31;;;;;;;;439:28;451:5;;;;;;;;;;;458:8;439:28;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;481:8;473:5;;:16;;;;;;;;;;;;;;;;;;502:4;495:11;;268:243;;;:::o",
   "source": "pragma solidity ^0.4.18;\n\ncontract Ownable {\n\n  address private owner;\n\n  event LogNewOwner(address oldOwner, address newOwner);\n\n  function Ownable()\n    public\n  {\n    owner = msg.sender;\n  }\n\n  modifier onlyOwner() {\n    require(msg.sender == owner);\n    _;\n  }\n\n  function changeOwner(address newOwner)\n    public\n    onlyOwner\n    returns(bool transferSuccess)\n  {\n    require(newOwner != 0);\n    require(newOwner != msg.sender);\n    LogNewOwner(owner, newOwner);\n    owner = newOwner;\n    return true;\n  }\n\n  function getOwner() \n    public\n    view\n    returns(address theOwner)\n  {\n    return owner;\n  }\n\n}",
-  "sourcePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/contractModifiers/Ownable.sol",
+  "sourcePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/contracts/contractModifiers/Ownable.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/contractModifiers/Ownable.sol",
+      "absolutePath": "/Users/whittlem/B9lab-ETH-17-Projects/Module_4-Remittance/contractLibrary/contracts/contractModifiers/Ownable.sol",
       "exportedSymbols": {
         "Ownable": [
           234
@@ -288,7 +288,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 579,
+                                  "referencedDeclaration": 665,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -368,7 +368,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 582,
+                              "referencedDeclaration": 668,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -409,7 +409,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 579,
+                                      "referencedDeclaration": 665,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -601,7 +601,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 582,
+                              "referencedDeclaration": 668,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -698,7 +698,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 582,
+                              "referencedDeclaration": 668,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -753,7 +753,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 579,
+                                      "referencedDeclaration": 665,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1059,5 +1059,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-26T11:34:31.062Z"
+  "updatedAt": "2017-12-02T21:30:23.563Z"
 }
