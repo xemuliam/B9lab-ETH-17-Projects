@@ -1,2 +1,6 @@
 .DS_Store
 node_modules
+Module_4-RockPaperScissors/build/contracts/*.json
+Module_7_CampaignHub/build/contracts/*.json
+Module_4-Remittance/build/contracts/*.json
+Module_4-Splitter/build/contracts/*.json

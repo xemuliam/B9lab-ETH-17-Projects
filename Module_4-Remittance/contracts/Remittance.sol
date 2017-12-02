@@ -1,71 +1,88 @@
 pragma solidity ^0.4.18;
 
-import '../contractLibrary/SafeMath.sol';
-import '../contractLibrary/contractModifiers/Killable.sol';
+import '../contractLibrary/contracts/SafeMath.sol';
+import '../contractLibrary/contracts/contractModifiers/Killable.sol';
 
 contract Remittance is Killable {
 
-  using SafeMath for uint256;
+    using SafeMath for uint256;
   
-  struct challengeStruct {
-      bytes32 challengeFactor1;
-      bytes32 challengeFactor2;
-      bool exists;
-  }
+    struct ChallengeStruct {
+        uint    approvedAmount;
+        bytes32 challengeFactor1;
+        bytes32 challengeFactor2;
+        uint    lastValidBlock;
+        bool    isPaid;
+    }
 
-  mapping(address => challengeStruct) public challengeStructs;
+    // shop address -> recipient address -> struct
+    mapping(address => mapping(address => ChallengeStruct)) private challengeStructs;
 
-  uint private challengeMaxTimeout;
+    uint public challengeMaxTimeout;
 
-  event LogInstantiateContract(address sender, uint currentBlockNumber, uint numBlocksUntilTimeout);
-  event LogPaymentRequest(address sender, bytes32 challengeFactor1, bytes32 challengeFactor2, uint requestAmount);
+    event LogCreateRemittance(address sender, uint approvedAmount, address shop, address recipient, uint currentBlock, uint lastValidBlock);
+    event LogPaymentRequest(address sender, address recipient, uint requestAmount);
 
-  function Remittance(uint numBlocksUntilTimeout)
-    public
-  {
-      // TODO: still need to figure out where and how to add the timeout
-      require(numBlocksUntilTimeout > 0);
-      challengeMaxTimeout = block.number.add(numBlocksUntilTimeout);
-      LogInstantiateContract(msg.sender, block.number, numBlocksUntilTimeout);
-  }
+    function Remittance(uint numBlocksUntilTimeout)
+        public
+    {
+        require(numBlocksUntilTimeout > 0);
+        challengeMaxTimeout = numBlocksUntilTimeout;
+    }
+    
+    function depositFunds() 
+        public
+        onlyOwner
+        payable
+        returns(bool success)
+    {
+        require(msg.value > 0);
+        return true;
+    }
   
-  /**
-   * paymentRequestor - address of the exchange shop requesting funds
-   * challengeFactor1 - pre-shared keccak256 hash with exchange shop
-   * challengeFactor2 - pre-shared keccak256 hash with funds recipient
-   */
-  
-  function setRequestorChallengeFactors(address exchangeShop, bytes32 challengeFactor1, bytes32 challengeFactor2)
-    onlyOwner
-    public
-    returns(bool isSet)
-  {
-      require(!isExchangeShop(exchangeShop));
-      challengeStructs[exchangeShop].challengeFactor1 = challengeFactor1;
-      challengeStructs[exchangeShop].challengeFactor2 = challengeFactor2;
-      challengeStructs[exchangeShop].exists = true;
-      return true;
-  }
-  
-  function paymentRequest(bytes32 challengeFactor1, bytes32 challengeFactor2, uint requestAmount)
-    public
-    returns(bool success)
-  {
-      require(isExchangeShop(msg.sender));
-      require(requestAmount > 0);
-      require(requestAmount < getOwner().balance);
-      require(keccak256(challengeFactor1, challengeFactor2) == keccak256(challengeStructs[msg.sender].challengeFactor1, challengeStructs[msg.sender].challengeFactor2));
-      LogPaymentRequest(msg.sender, challengeFactor1, challengeFactor2, requestAmount);
-      msg.sender.transfer(requestAmount);
-      return true;
-  }
-  
-  function isExchangeShop(address shopAddress) 
-    public 
-    constant 
-    returns(bool isIndeed)
-  {
-    return challengeStructs[shopAddress].exists;
-  }
+    function createRemittance(uint approvedAmount, address shop, bytes32 password1, address recipient, bytes32 password2)
+        public
+        onlyOwner
+        returns(bool success)
+    {
+        require(approvedAmount > 0);
+        require(shop != 0);
+        require(password1 != 0);
+        require(recipient != 0);
+        require(password2 != 0);
+        ChallengeStruct storage challenge = challengeStructs[shop][recipient];
+        challenge.approvedAmount = approvedAmount;
+        challenge.challengeFactor1 = keccak256(password1);
+        challenge.challengeFactor2 = keccak256(password2);
+        challenge.lastValidBlock = block.number.add(challengeMaxTimeout);
+        LogCreateRemittance(msg.sender, approvedAmount, shop, recipient, block.number, challenge.lastValidBlock);
+        return true;
+    }
+    
+    function sendRemittance(address recipient, bytes32 shopPasswordHash, bytes32 recipientPasswordHash, uint requestAmount)
+        public
+        returns(bool success)
+    {
+        ChallengeStruct storage challenge = challengeStructs[msg.sender][recipient];
+        require(!challenge.isPaid);
+        require(shopPasswordHash == challenge.challengeFactor1);
+        require(recipientPasswordHash == challenge.challengeFactor2);
+        require(requestAmount == challenge.approvedAmount);
+        require(block.number <= challenge.lastValidBlock);
+        challenge.isPaid = true;
+        LogPaymentRequest(msg.sender, recipient, requestAmount);
+        msg.sender.transfer(requestAmount);
+        return true;   
+    }
+    
+    /** Getters */
+    
+    function getChallengeStruct(address shop, address recipient)
+        public
+        view
+        returns(ChallengeStruct challengeStruct)
+    {
+        return challengeStructs[shop][recipient];
+    }
   
 }
