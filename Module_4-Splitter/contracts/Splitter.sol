@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import '../contractLibrary/contractModifiers/Pausable.sol';
+import '../contractLibrary/contracts/contractModifiers/Pausable.sol';
 
 contract Splitter is Pausable {
 
