@@ -50,6 +50,7 @@ contract Remittance is Killable {
         require(password1 != 0);
         require(recipient != 0);
         require(password2 != 0);
+        require(approvedAmount <= this.balance);
         ChallengeStruct storage challenge = challengeStructs[shop][recipient];
         challenge.approvedAmount = approvedAmount;
         challenge.challengeFactor1 = keccak256(password1);
@@ -69,6 +70,7 @@ contract Remittance is Killable {
         require(recipientPasswordHash == challenge.challengeFactor2);
         require(requestAmount == challenge.approvedAmount);
         require(block.number <= challenge.lastValidBlock);
+        require(requestAmount <= this.balance);
         challenge.isPaid = true;
         LogPaymentRequest(msg.sender, recipient, requestAmount);
         msg.sender.transfer(requestAmount);
