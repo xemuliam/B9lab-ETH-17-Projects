@@ -1,3 +1,4 @@
+require("angular");
 require("file-loader?name=../index.html!../index.html");
 
 var app = angular.module('HubApp', []);
