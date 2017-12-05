@@ -12,6 +12,7 @@ app.controller("HubController",
   function($scope, $location, $http, $q, $window, $timeout) {
 
   var hub;
+  Hub.setProvider(web3.currentProvider);
   Hub.deployed().then(function(instance) {
     hub = instance;
     newCampaignWatcher = watchForNewCampaigns();
