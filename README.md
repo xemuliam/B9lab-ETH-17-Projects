@@ -42,7 +42,7 @@ Truffle Default Builder
 
 2. cd <Project_Directory>  e.g. cd Module_7-CampaignHub
 
-3. rm build/contracts/*.json; ./node_modules/.bin/truffle compile --all; ./node_modules/.bin/truffle build
+3. rm build/contracts/*.json; ./node_modules/.bin/truffle compile --all; ./node_modules/.bin/truffle migrate --reset; ./node_modules/.bin/truffle build
 
 4. php -S 0.0.0.0:8000 -t <Project_Directory>/build/app   e.g. php -S 0.0.0.0:8000 -t build
 
@@ -55,7 +55,7 @@ Webpack
 
 2. cd <Project_Directory>  e.g. cd Module_4-Splitter
 
-3. rm build/contracts/*.json; ./node_modules/.bin/truffle compile --all; ./node_modules/.bin/truffle build; ./node_modules/.bin/webpack
+3. rm build/contracts/*.json; ./node_modules/.bin/truffle compile --all; ./node_modules/.bin/truffle migrate --reset; ./node_modules/.bin/truffle build; ./node_modules/.bin/webpack
 
 4. php -S 0.0.0.0:8000 -t <Project_Directory>/build/app   e.g. php -S 0.0.0.0:8000 -t Module_4-Splitter/build/app
 
