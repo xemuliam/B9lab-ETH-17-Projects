@@ -1,5 +1,32 @@
 require("angular");
 
+// Import libraries we need.
+//import { default as BigNumber } from 'bignumber.js';
+import { default as Web3 } from 'web3';
+import { default as contract } from 'truffle-contract'
+import { default as Promise } from 'bluebird';
+import { default as $ } from 'jquery';
+
+// Import our contract artifacts and turn them into usable abstractions.
+import hubArtifacts from '../../build/contracts/Hub.json'
+
+// Hub is our usable abstraction, which we'll use through the code below.
+const Hub = contract(hubArtifacts);
+
+// Supports Mist, and other wallets that provide 'web3'.
+if (typeof web3 !== 'undefined') {
+    // Use the Mist/wallet/Metamask provider.
+    console.log("web3 is not undefined so using Mist");
+    window.web3 = new Web3(web3.currentProvider);
+} else {
+    // Your preferred fallback.
+    console.log("web3 is undefined so using the fallback.");
+    window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+}
+
+Promise.promisifyAll(web3.eth, { suffix: "Promise"});
+Promise.promisifyAll(web3.version, { suffix: "Promise"});
+
 var app = angular.module('HubApp', []);
 
 app.config(function( $locationProvider) {
