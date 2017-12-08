@@ -40,7 +40,7 @@ Truffle Default Builder
 
 1. Make sure TestRPC is running
 
-2. cd <Project_Directory>  e.g. cd Module_7-CampaignHub
+2. cd <Project_Directory>  e.g. cd Module_7-CampaignHub-TruffleDefaultBuilder
 
 3. rm build/contracts/*.json; ./node_modules/.bin/truffle compile --all; ./node_modules/.bin/truffle migrate --reset; ./node_modules/.bin/truffle build
 
@@ -53,10 +53,10 @@ Webpack
 
 1. Make sure TestRPC is running
 
-2. cd <Project_Directory>  e.g. cd Module_4-Splitter
+2. cd <Project_Directory>  e.g. cd Module_7-CampaignHub-Webpack
 
-3. rm build/contracts/*.json; ./node_modules/.bin/truffle compile --all; ./node_modules/.bin/truffle migrate --reset; ./node_modules/.bin/truffle build; ./node_modules/.bin/webpack
+3. rm build/contracts/*.json; ./node_modules/.bin/truffle compile --all; ./node_modules/.bin/truffle migrate --reset; ./node_modules/.bin/truffle build
 
-4. php -S 0.0.0.0:8000 -t <Project_Directory>/build/app   e.g. php -S 0.0.0.0:8000 -t Module_4-Splitter/build/app
+4. php -S 0.0.0.0:8000 -t <Project_Directory>/build/app   e.g. php -S 0.0.0.0:8000 -t build/app
 
 5. Open http://127.0.0.1:8000 in your browser
