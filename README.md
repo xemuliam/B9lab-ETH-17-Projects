@@ -60,3 +60,16 @@ Webpack
 4. php -S 0.0.0.0:8000 -t <Project_Directory>/build/app   e.g. php -S 0.0.0.0:8000 -t build/app
 
 5. Open http://127.0.0.1:8000 in your browser
+
+
+React
+
+1. Install truffle globally -- sudo npm install truffle -g
+
+2. Create a react project directory
+
+3. Enter the directory and type "truffle unbox react"
+
+4. Update the truffle.js with the network details
+
+5. Run "truffle compile", "truffle migrate --reset", "npm start"
