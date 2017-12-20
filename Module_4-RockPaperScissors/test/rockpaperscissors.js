@@ -10,10 +10,18 @@ contract('Contract', function(accounts) {
     };
 
     var myContract;
+    var playerOneRock;
+    var playerOnePaper;
+    var playerOneScissors;
+    var playerTwoRock;
+    var playerTwoPaper;
+    var playerTwoScissors;
 
     const owner = accounts[0]; 
     const playerOne = accounts[1]; 
     const playerTwo = accounts[2]; 
+    const playerOnePin = 123;
+    const playerTwoPin = 456;
     const correctDepositAmount = 100000000000000000;
 
     describe("RockPaperScissors", function() {
@@ -22,6 +30,30 @@ contract('Contract', function(accounts) {
             return RockPaperScissors.new( correctDepositAmount, { from : owner } )
                 .then( function( instance ) {
                     myContract = instance;
+                    return myContract.saltedChoiceHash( Choices.Rock, playerOnePin, { from:playerOne } );
+                })
+                .then( receivedValue => {
+                    playerOneRock = receivedValue;
+                    return myContract.saltedChoiceHash( Choices.Paper, playerOnePin, { from:playerOne } );
+                }) 
+                .then( receivedValue => {
+                    playerOnePaper = receivedValue;
+                    return myContract.saltedChoiceHash( Choices.Scissors, playerOnePin, { from:playerOne } );
+                })
+                .then( receivedValue => {
+                    playerOneScissors = receivedValue;
+                    return myContract.saltedChoiceHash( Choices.Rock, playerTwoPin, { from:playerTwo } );
+                })
+                .then( receivedValue => {
+                    playerTwoRock = receivedValue;
+                    return myContract.saltedChoiceHash( Choices.Paper, playerTwoPin, { from:playerTwo } );
+                })
+                .then( receivedValue => {
+                    playerTwoPaper = receivedValue;
+                    return myContract.saltedChoiceHash( Choices.Scissors, playerTwoPin, { from:playerTwo } );
+                })
+                .then( receivedValue => {
+                    playerTwoScissors = receivedValue;
                 });
         });
 
@@ -39,10 +71,18 @@ contract('Contract', function(accounts) {
                 });
         });
 
+        /** TODO:
+            The variables used below in the forEach array are not defined because the beforeEach has not run yet.
+            The beforeEach runs before each test but this forEach loop runs the test so the variables are not defined
+            yet. If you console.log the variables within the test they are defined. I need to find a way to initialise
+            the variables from the beforeEach above another way. I need those variables initialised globally before
+            any of the tests start. 
+        */
+
         [
-            [ Choices.Rock, Choices.Scissors, 1 ],
-            [ Choices.Paper, Choices.Rock, 1 ],
-            [ Choices.Scissors, Choices.Paper, 1 ],
+            [ playerOneRock, playerTwoScissors, 1 ],
+            [ playerOnePaper, playerTwoRock, 1 ],
+            [ playerOneScissors, playerTwoRPaper, 1 ],
         ].forEach( winningChoices => {
             let playerOneChoice, playerTwoChoice, expectedWinner;
 
@@ -50,13 +90,18 @@ contract('Contract', function(accounts) {
             playerTwoChoice = winningChoices[1];
             expectedWinner = winningChoices[2];
 
+            console.log(playerOneChoice);
+            console.log(playerTwoChoice);
+
             it("player one: " + winningChoices[0] + "; " + "player two: " + winningChoices[1] + "; expected winner: " + winningChoices[2], function() {
 
                 return myContract.playerChoice( playerOneChoice, { from:playerOne, value:correctDepositAmount } )
                     .then( receivedValue => {
+                        console.log(receivedValue);
                         return myContract.playerChoice( playerTwoChoice, { from:playerTwo, value:correctDepositAmount } );
                     })
                     .then( receivedValue => {  
+                        cosno
                         assert.equal( receivedValue.logs[2].args.gameResult, expectedWinner, "unexpected winner" );
                     });
 
@@ -65,9 +110,9 @@ contract('Contract', function(accounts) {
         });
 
         [
-            [ Choices.Rock, Choices.Scissors, 2 ],
-            [ Choices.Paper, Choices.Rock, 2 ],
-            [ Choices.Scissors, Choices.Paper, 2 ],
+            [ playerOneRock, playerTwoScissors, 2 ],
+            [ playerOnePaper, playerTwoRock, 2 ],
+            [ playerOneScissors, playerTwoRPaper, 2 ],
         ].forEach( winningChoices => {
             let playerOneChoice, playerTwoChoice, expectedLoser;
 
