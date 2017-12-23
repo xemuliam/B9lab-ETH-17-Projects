@@ -10,12 +10,6 @@ contract('Contract', function(accounts) {
     };
 
     var myContract;
-    var playerOneRock;
-    var playerOnePaper;
-    var playerOneScissors;
-    var playerTwoRock;
-    var playerTwoPaper;
-    var playerTwoScissors;
 
     const owner = accounts[0]; 
     const playerOne = accounts[1]; 
@@ -30,30 +24,6 @@ contract('Contract', function(accounts) {
             return RockPaperScissors.new( correctDepositAmount, { from : owner } )
                 .then( function( instance ) {
                     myContract = instance;
-                    return myContract.saltedChoiceHash( Choices.Rock, playerOnePin, { from:playerOne } );
-                })
-                .then( receivedValue => {
-                    playerOneRock = receivedValue;
-                    return myContract.saltedChoiceHash( Choices.Paper, playerOnePin, { from:playerOne } );
-                }) 
-                .then( receivedValue => {
-                    playerOnePaper = receivedValue;
-                    return myContract.saltedChoiceHash( Choices.Scissors, playerOnePin, { from:playerOne } );
-                })
-                .then( receivedValue => {
-                    playerOneScissors = receivedValue;
-                    return myContract.saltedChoiceHash( Choices.Rock, playerTwoPin, { from:playerTwo } );
-                })
-                .then( receivedValue => {
-                    playerTwoRock = receivedValue;
-                    return myContract.saltedChoiceHash( Choices.Paper, playerTwoPin, { from:playerTwo } );
-                })
-                .then( receivedValue => {
-                    playerTwoPaper = receivedValue;
-                    return myContract.saltedChoiceHash( Choices.Scissors, playerTwoPin, { from:playerTwo } );
-                })
-                .then( receivedValue => {
-                    playerTwoScissors = receivedValue;
                 });
         });
 
@@ -71,67 +41,45 @@ contract('Contract', function(accounts) {
                 });
         });
 
-        /** TODO:
-            The variables used below in the forEach array are not defined because the beforeEach has not run yet.
-            The beforeEach runs before each test but this forEach loop runs the test so the variables are not defined
-            yet. If you console.log the variables within the test they are defined. I need to find a way to initialise
-            the variables from the beforeEach above another way. I need those variables initialised globally before
-            any of the tests start. 
-        */
-
         [
-            [ playerOneRock, playerTwoScissors, 1 ],
-            [ playerOnePaper, playerTwoRock, 1 ],
-            [ playerOneScissors, playerTwoRPaper, 1 ],
+            [ Choices.Rock, playerOnePin, Choices.Scissors, playerTwoPin, 1 ],
+            [ Choices.Paper, playerOnePin, Choices.Rock, playerTwoPin, 1 ],
+            [ Choices.Scissors, playerOnePin, Choices.Paper, playerTwoPin, 1 ],
         ].forEach( winningChoices => {
-            let playerOneChoice, playerTwoChoice, expectedWinner;
+            let playerOneChoice, playerOnePin, playerTwoChoice, playerTwoPin, expectedWinner;
+            let playerOneHash, playerTwoHash;
+            let gameNumber;
 
             playerOneChoice = winningChoices[0];
-            playerTwoChoice = winningChoices[1];
-            expectedWinner = winningChoices[2];
+            playerOnePin = winningChoices[1];
+            playerTwoChoice = winningChoices[2];
+            playerTwoPin = winningChoices[3];
+            expectedWinner = winningChoices[4];           
 
-            console.log(playerOneChoice);
-            console.log(playerTwoChoice);
-
-            it("player one: " + winningChoices[0] + "; " + "player two: " + winningChoices[1] + "; expected winner: " + winningChoices[2], function() {
-
-                return myContract.playerChoice( playerOneChoice, { from:playerOne, value:correctDepositAmount } )
-                    .then( receivedValue => {
-                        console.log(receivedValue);
-                        return myContract.playerChoice( playerTwoChoice, { from:playerTwo, value:correctDepositAmount } );
-                    })
-                    .then( receivedValue => {  
-                        cosno
-                        assert.equal( receivedValue.logs[2].args.gameResult, expectedWinner, "unexpected winner" );
-                    });
-
+            it("player one: " + winningChoices[0] + "; " + "player two: " + winningChoices[2] + "; expected winner: " + winningChoices[4], function() {
+                return myContract.saltedChoiceHash( playerOneChoice, playerOnePin, { from:playerOne } )
+                .then( receivedValue => {
+                    playerOneHash = receivedValue;
+                    return myContract.saltedChoiceHash( playerTwoChoice, playerTwoPin, { from:playerTwo } );
+                })
+                .then( receivedValue => {
+                    playerTwoHash = receivedValue;
+                    return myContract.playerChoice( playerOneHash, { from:playerOne, value:correctDepositAmount } );
+                })
+                .then( txObj => {
+                    return myContract.playerChoice( playerTwoHash, { from:playerTwo, value:correctDepositAmount } );
+                })
+                .then( txObj => {
+                    gameNumber = parseInt(txObj.logs[1].args.gameNumber);
+                    return myContract.playerRevealForResult( gameNumber, playerOnePin, { from:playerOne } );
+                })
+                .then( txObj => {
+                    return myContract.playerRevealForResult( gameNumber, playerTwoPin, { from:playerTwo } );
+                })
+                .then( txObj => {
+                    assert.equal( (parseInt(txObj.logs[0].args.gameResult) - 1), expectedWinner, "unexpected winner" );
+                });
             });
-
-        });
-
-        [
-            [ playerOneRock, playerTwoScissors, 2 ],
-            [ playerOnePaper, playerTwoRock, 2 ],
-            [ playerOneScissors, playerTwoRPaper, 2 ],
-        ].forEach( winningChoices => {
-            let playerOneChoice, playerTwoChoice, expectedLoser;
-
-            playerOneChoice = winningChoices[0];
-            playerTwoChoice = winningChoices[1];
-            expectedLoser = winningChoices[2];
-
-            it("player one: " + winningChoices[0] + "; " + "player two: " + winningChoices[1] + "; expected loser: " + winningChoices[2], function() {
-
-                return myContract.playerChoice( playerOneChoice, { from:playerOne, value:correctDepositAmount } )
-                    .then( receivedValue => {
-                        return myContract.playerChoice( playerTwoChoice, { from:playerTwo, value:correctDepositAmount } );
-                    })
-                    .then( receivedValue => {  
-                        assert.notEqual( receivedValue.logs[2].args.gameResult, expectedLoser, "unexpected loser" );
-                    });
-
-            });
-
         });
 
         it("should have a contract that is not paused on creation", function() {
