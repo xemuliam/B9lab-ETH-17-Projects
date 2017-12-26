@@ -6,85 +6,97 @@ import '../contractLibrary/contracts/contractModifiers/Killable.sol';
 contract Remittance is Killable {
 
     using SafeMath for uint256;
-  
+
     struct ChallengeStruct {
         uint    approvedAmount;
-        bytes32 challengeFactor1;
-        bytes32 challengeFactor2;
         uint    lastValidBlock;
         bool    isPaid;
     }
 
-    // shop address -> recipient address -> struct
-    mapping(address => mapping(address => ChallengeStruct)) private challengeStructs;
+    uint public numBlocksUntilTimeout;
 
-    uint public challengeMaxTimeout;
-
-    event LogCreateRemittance(address sender, uint approvedAmount, address shop, address recipient, uint currentBlock, uint lastValidBlock);
-    event LogPaymentRequest(address sender, address recipient, uint requestAmount);
-
-    function Remittance(uint numBlocksUntilTimeout)
+    mapping(bytes32 => ChallengeStruct) private challengeStructs;
+  
+    event LogDeposit(address indexed sender, uint indexed deposit, uint indexed balance);
+    event LogSendRemittance(address sender, uint indexed approvedAmount, address indexed shop, address indexed recipient, uint currentBlock, uint lastValidBlock);
+    event LogWithdrawRequest(address indexed sender, address indexed recipient, uint indexed requestAmount);
+    
+    function Remittance(uint _numBlocksUntilTimeout)
         public
     {
-        require(numBlocksUntilTimeout > 0);
-        challengeMaxTimeout = numBlocksUntilTimeout;
+        require(_numBlocksUntilTimeout > 0);
+        numBlocksUntilTimeout = _numBlocksUntilTimeout;
     }
-    
+
     function depositFunds() 
         public
-        onlyOwner
         payable
         returns(bool success)
     {
-        require(msg.value > 0);
+        assert(msg.value > 0);
+        LogDeposit(msg.sender, msg.value, this.balance);
         return true;
     }
-  
-    function createRemittance(uint approvedAmount, address shop, bytes32 password1, address recipient, bytes32 password2)
+
+    function sendRemittance(uint approvedAmount, address shop, bytes32 shopPassword, address recipient, bytes32 recipientPassword)
         public
         onlyOwner
         returns(bool success)
     {
         require(approvedAmount > 0);
-        require(shop != 0);
-        require(password1 != 0);
-        require(recipient != 0);
-        require(password2 != 0);
-        require(approvedAmount <= this.balance);
-        ChallengeStruct storage challenge = challengeStructs[shop][recipient];
+        require(shop != 0x0);
+        require(shopPassword != 0);
+        require(recipient != 0x0);
+        require(recipientPassword != 0);
+
+        bytes32 structHash = createHash(recipient, shopPassword, recipientPassword);
+
+        ChallengeStruct memory challenge = challengeStructs[structHash];
+        assert(challenge.lastValidBlock == 0); // allow password hash combination once
         challenge.approvedAmount = approvedAmount;
-        challenge.challengeFactor1 = keccak256(password1);
-        challenge.challengeFactor2 = keccak256(password2);
-        challenge.lastValidBlock = block.number.add(challengeMaxTimeout);
-        LogCreateRemittance(msg.sender, approvedAmount, shop, recipient, block.number, challenge.lastValidBlock);
+        challenge.lastValidBlock = block.number.add(numBlocksUntilTimeout);
+        challengeStructs[structHash] = challenge;
+
+        LogSendRemittance(msg.sender, approvedAmount, shop, recipient, block.number, challenge.lastValidBlock);
         return true;
     }
-    
-    function sendRemittance(address recipient, bytes32 shopPasswordHash, bytes32 recipientPasswordHash, uint requestAmount)
+
+    function requestWithdraw(address recipient, bytes32 unlockHash)
         public
         returns(bool success)
     {
-        ChallengeStruct storage challenge = challengeStructs[msg.sender][recipient];
-        require(!challenge.isPaid);
-        require(shopPasswordHash == challenge.challengeFactor1);
-        require(recipientPasswordHash == challenge.challengeFactor2);
-        require(requestAmount == challenge.approvedAmount);
-        require(block.number <= challenge.lastValidBlock);
-        require(requestAmount <= this.balance);
+        require(recipient != 0x0);
+        require(unlockHash != 0);
+
+        ChallengeStruct memory challenge = challengeStructs[unlockHash];
+        assert(!challenge.isPaid);
+        assert(block.number <= challenge.lastValidBlock);
+        assert(challenge.approvedAmount <= this.balance);
         challenge.isPaid = true;
-        LogPaymentRequest(msg.sender, recipient, requestAmount);
-        msg.sender.transfer(requestAmount);
+        challengeStructs[unlockHash] = challenge;
+        LogWithdrawRequest(msg.sender, recipient, challenge.approvedAmount);
+        msg.sender.transfer(challenge.approvedAmount);
         return true;   
     }
-    
+
+    /** Pure */
+
+    function createHash(address recipientAddress, bytes32 shopPassword, bytes32 recipientPassword)
+        public
+        pure
+        returns(bytes32 hash)
+    {    
+        return keccak256(recipientAddress, shopPassword, recipientPassword);
+    } 
+
     /** Getters */
     
-    function getChallengeStruct(address shop, address recipient)
+    function getChallengeStruct(bytes32 unlockHash)
         public
         view
         returns(ChallengeStruct challengeStruct)
     {
-        return challengeStructs[shop][recipient];
+        return challengeStructs[unlockHash];
     }
   
 }
