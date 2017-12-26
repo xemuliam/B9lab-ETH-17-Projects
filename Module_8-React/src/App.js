@@ -61,6 +61,7 @@ class App extends Component {
         this.storageContractInstance = instance;
         this.account = accounts[0];
 
+        // add event listener
         this.addEventListener(this);
 
         // Stores a given value, 5 by default.
