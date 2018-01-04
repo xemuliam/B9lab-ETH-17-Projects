@@ -19,7 +19,7 @@ contract Remittance is Killable {
   
     event LogDeposit(address indexed sender, uint indexed deposit, uint indexed balance);
     event LogSendRemittance(address sender, uint indexed approvedAmount, address indexed shop, address indexed recipient, uint currentBlock, uint lastValidBlock);
-    event LogWithdrawRequest(address indexed sender, address indexed recipient, uint indexed requestAmount);
+    event LogWithdrawRequest(address indexed requestor, uint indexed requestAmount);
     
     function Remittance(uint _numBlocksUntilTimeout)
         public
@@ -28,53 +28,42 @@ contract Remittance is Killable {
         numBlocksUntilTimeout = _numBlocksUntilTimeout;
     }
 
-    function depositFunds() 
+    function sendRemittance(uint approvedAmount, address shop, address recipient, bytes32 suppliedHash)
         public
+        onlyOwner
         payable
         returns(bool success)
     {
-        assert(msg.value > 0);
-        LogDeposit(msg.sender, msg.value, this.balance);
-        return true;
-    }
-
-    function sendRemittance(uint approvedAmount, address shop, bytes32 shopPassword, address recipient, bytes32 recipientPassword)
-        public
-        onlyOwner
-        returns(bool success)
-    {
+        require(msg.value > 0);
+        // gas-punish: if(msg.value == 0) { assembly { invalid } }
         require(approvedAmount > 0);
         require(shop != 0x0);
-        require(shopPassword != 0);
         require(recipient != 0x0);
-        require(recipientPassword != 0);
+        require(suppliedHash != 0x0);
+        
+        LogDeposit(msg.sender, msg.value, this.balance);
 
-        bytes32 structHash = createHash(recipient, shopPassword, recipientPassword);
-
-        ChallengeStruct memory challenge = challengeStructs[structHash];
-        assert(challenge.lastValidBlock == 0); // allow password hash combination once
+        ChallengeStruct storage challenge = challengeStructs[suppliedHash];
+        require(challenge.lastValidBlock == 0); // allow password hash combination once
         challenge.approvedAmount = approvedAmount;
         challenge.lastValidBlock = block.number.add(numBlocksUntilTimeout);
-        challengeStructs[structHash] = challenge;
 
         LogSendRemittance(msg.sender, approvedAmount, shop, recipient, block.number, challenge.lastValidBlock);
         return true;
     }
 
-    function requestWithdraw(address recipient, bytes32 unlockHash)
+    function requestWithdraw(bytes32 unlockHash)
         public
         returns(bool success)
     {
-        require(recipient != 0x0);
-        require(unlockHash != 0);
+        require(unlockHash != 0x0);
 
-        ChallengeStruct memory challenge = challengeStructs[unlockHash];
-        assert(!challenge.isPaid);
-        assert(block.number <= challenge.lastValidBlock);
+        ChallengeStruct storage challenge = challengeStructs[unlockHash];
+        require(!challenge.isPaid);
+        require(block.number <= challenge.lastValidBlock);
         assert(challenge.approvedAmount <= this.balance);
         challenge.isPaid = true;
-        challengeStructs[unlockHash] = challenge;
-        LogWithdrawRequest(msg.sender, recipient, challenge.approvedAmount);
+        LogWithdrawRequest(msg.sender, challenge.approvedAmount);
         msg.sender.transfer(challenge.approvedAmount);
         return true;   
     }
