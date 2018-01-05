@@ -20,7 +20,7 @@ contract('Remittance', function(accounts) {
   var numBlocksUntilTimeout = 1;
   
   beforeEach( function() {
-    return Remittance.new( numBlocksUntilTimeout, { from: senderAlice } )
+    return Remittance.new(numBlocksUntilTimeout, { from: senderAlice })
       .then( function( instance ) {
         myContract = instance;
       });
@@ -40,27 +40,39 @@ contract('Remittance', function(accounts) {
     password1 = 'passwordOne';
     password2 = 'passwordTwo';
 
-    return myContract.createHash( recipientBob, password1, password2 )
+    return web3.eth.getBalancePromise(shopCarol)
+    .then(function (balance) {
+        startBalance = balance;
+        return myContract.createHash(recipientBob, password1, password2);
+    })
     .then( responseData => {
         suppliedHash = responseData;
-        startBalance = await web3.eth.getBalancePromise(shopCarol);
-
-        return myContract.sendRemittance( amountToSend, shopCarol, recipientBob, suppliedHash, { from: senderAlice, value: amountToFund } );
+        return myContract.sendRemittance(amountToSend, shopCarol, recipientBob, suppliedHash, { from: senderAlice, value: amountToFund });
     })
     .then( txObj => {
         gasUsed = txObj.receipt.gasUsed;
-        tx = await web3.eth.getTransactionPromise(txObj.tx);
-        gasPrice = tx.gasPrice;
-        txFee = gasPrice.times(gasUsed);
-        endBalance = await web3.eth.getBalancePromise(Carol)
         assert.strictEqual( txObj.logs[0].args.deposit.toString(10), amountToFund, "Contract not funded by the correct amount" );
-        assert.strictEqual( startBalance.plus(amountToSend).minus(txFee).toString(10), endBalance.toString(10), "The shop did not receive the remittance");  
-        
-        return myContract.requestWithdraw( suppliedHash, { from: shopCarol } );
+        return web3.eth.getTransactionPromise(txObj.tx);
+    })
+    .then( txObj => {
+        gasPrice = txObj.gasPrice;
+        txFee = gasPrice.times(gasUsed);
+        return myContract.requestWithdraw(suppliedHash, { from: shopCarol });
     })
     .then( txObj => {
         assert.strictEqual( txObj.logs[0].args.requestAmount.toString(10), amountToSend, "Remittance was not processed successfully" );
+        return web3.eth.getBalancePromise(shopCarol);
+    })
+    .then(function (balance) {
+        endBalance = balance;
+        // there is a diffeence of 1904800000000000 (0.0019048 Eth), not sure where that is coming from.
+        // gas used: 73777, gas price: 100000000000, txfee: 7377700000000000
+        assert.strictEqual( startBalance.plus(amountToSend).minus(txFee).toString(10), endBalance.toString(10), "The shop did not receive the remittance");
+        // + expected - actual
+        // -101794110100000000000
+        // +101796014900000000000
     });
+
   });
 
 });
