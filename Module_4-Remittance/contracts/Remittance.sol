@@ -52,12 +52,15 @@ contract Remittance is Killable {
         return true;
     }
 
-    function requestWithdraw(bytes32 unlockHash)
+    function requestWithdraw(address recipientAddress, bytes32 shopPassword, bytes32 recipientPassword)
         public
         returns(bool success)
     {
-        require(unlockHash != 0x0);
+        require(recipientAddress != 0x0);
+        require(shopPassword != 0);
+        require(recipientPassword != 0);
 
+        bytes32 unlockHash = createHash(recipientAddress, shopPassword, recipientPassword);
         ChallengeStruct storage challenge = challengeStructs[unlockHash];
         require(!challenge.isPaid);
         require(block.number <= challenge.lastValidBlock);

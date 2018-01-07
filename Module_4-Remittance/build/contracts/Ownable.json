@@ -288,7 +288,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 644,
+                                  "referencedDeclaration": 668,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -368,7 +368,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 647,
+                              "referencedDeclaration": 671,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -409,7 +409,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 644,
+                                      "referencedDeclaration": 668,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -601,7 +601,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 647,
+                              "referencedDeclaration": 671,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -698,7 +698,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 647,
+                              "referencedDeclaration": 671,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -753,7 +753,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 644,
+                                      "referencedDeclaration": 668,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1059,5 +1059,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-05T14:50:08.485Z"
+  "updatedAt": "2018-01-07T18:43:56.168Z"
 }

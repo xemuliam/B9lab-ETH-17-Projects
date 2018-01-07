@@ -532,7 +532,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 644,
+                                  "referencedDeclaration": 668,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -563,7 +563,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 644,
+                                  "referencedDeclaration": 668,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -594,7 +594,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 661,
+                                  "referencedDeclaration": 685,
                                   "type": "contract Killable",
                                   "value": "this"
                                 },
@@ -645,7 +645,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 650,
+                              "referencedDeclaration": 674,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -825,7 +825,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 647,
+                              "referencedDeclaration": 671,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -956,7 +956,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 644,
+                                  "referencedDeclaration": 668,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -1001,7 +1001,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 661,
+                                  "referencedDeclaration": 685,
                                   "type": "contract Killable",
                                   "value": "this"
                                 },
@@ -1052,7 +1052,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 650,
+                              "referencedDeclaration": 674,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -1110,5 +1110,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-05T14:50:08.484Z"
+  "updatedAt": "2018-01-07T18:43:56.167Z"
 }
